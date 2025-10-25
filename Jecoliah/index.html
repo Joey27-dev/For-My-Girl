@@ -1,0 +1,1237 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sweet's Flower Delivery 💐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f12;
+            --card: #16161a;
+            --rose: #E63946;
+            --pink: #FFB6C1;
+            --gold: #FFD700;
+            --muted: #bdbbbb;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Poppins, system-ui, Segoe UI, Roboto, -apple-system, Arial;
+            overflow-x: hidden
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 10%, #121217 0%, var(--bg) 40%), linear-gradient(180deg, #0b0b0d 0%, #0f0f12 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem
+        }
+
+        .app {
+            width: 100%;
+            max-width: 450px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden
+        }
+
+        header {
+            text-align: center;
+            padding: 8px;
+            opacity: 0;
+            transition: opacity 1.5s ease
+        }
+
+        h1 {
+            margin: .1rem 0;
+            font-size: 22px;
+            letter-spacing: 0.4px
+        }
+
+        .byline {
+            color: var(--gold);
+            font-size: 14px;
+            margin-top: 4px
+        }
+
+        .card {
+            background: var(--card);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 12px
+        }
+
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center
+        }
+
+        .big-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--rose), var(--pink));
+            padding: 12px 20px;
+            border-radius: 999px;
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 6px 18px rgba(230, 57, 70, 0.2)
+        }
+
+        .question {
+            font-size: 16px;
+            margin-bottom: 22px
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            display: none
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            cursor: pointer
+        }
+
+        .option.selected {
+            border-color: rgba(230, 57, 70, 0.85);
+            box-shadow: 0 6px 18px rgba(230, 57, 70, 0.06);
+            background: linear-gradient(180deg, rgba(230, 57, 70, 0.05), rgba(255, 182, 193, 0.02))
+        }
+
+        .rating {
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
+
+        .star {
+            font-size: 26px;
+            opacity: 0.35;
+            cursor: pointer
+        }
+
+        .star.on {
+            opacity: 1;
+            color: var(--gold)
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px
+        }
+
+        .ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: var(--muted);
+            cursor: pointer
+        }
+
+        .final {
+            padding: 20px
+        }
+
+        .confetti {
+            height: 80px
+        }
+
+        .download-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px
+        }
+
+        .download-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--rose);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: twinkle 2s linear infinite
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.5)
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-15px) scale(1)
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.5)
+            }
+        }
+
+        @media (max-width:450px) {
+            .app {
+                padding: 14px
+            }
+        }
+
+        .page-header {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            font-size: 16px;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(255, 182, 193, 0.4);
+            font-weight: 600;
+        }
+
+        .glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rose), var(--pink), var(--gold));
+            background-size: 300% 100%;
+            animation: glowMove 6s linear infinite;
+            filter: blur(2px);
+        }
+
+        @keyframes glowMove {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 300% 0;
+            }
+        }
+
+
+        .question.center {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .question.center.fade-in {
+            opacity: 1;
+        }
+
+        .final.center {
+            animation: softGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes softGlow {
+            from {
+                box-shadow: 0 0 5px var(--rose);
+            }
+
+            to {
+                box-shadow: 0 0 20px var(--pink);
+            }
+        }
+
+        .question div {
+            color: #d4af37;
+            /* elegant gold */
+        }
+
+        .question div {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+
+        .full-height {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+
+        #flowerIntro {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #f3e1e8;
+            overflow: hidden;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            /* stack items from top */
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        #flowerContainer {
+            position: relative;
+            width: 100%;
+            height: 40vh;
+            /* shorter collage height */
+            max-width: 1200px;
+            margin-bottom: 20rem;
+            /* space below flowers for message */
+            overflow: hidden;
+        }
+
+        #flowerMessage {
+            z-index: 10000;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 16px;
+            padding: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            font-family: 'Georgia', serif;
+            color: #333;
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        #receiveBtn {
+            background: #d86aff;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        #receiveBtn:hover {
+            transform: scale(1.1);
+            background: #b74ae3;
+        }
+
+        .flower {
+            position: absolute;
+            opacity: 0;
+            width: clamp(60px, 18vw, 120px);
+            max-width: 100px;
+            transform: scale(0) rotate(0deg);
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            pointer-events: none;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+
+
+
+
+        #flowerIntro {
+            height: 100vh;
+            /* or whatever height you want for the visible area */
+            overflow-y: auto;
+            /* allows vertical scrolling */
+            position: absolute;
+            padding: 20px;
+            /* optional, adds space inside */
+        }
+
+        #flowerContainer {
+            position: relative;
+            /* for image absolute positioning */
+        }
+
+        #flowerMessage {
+            margin-top: 70vh;
+            /* extra gap between flowers and message */
+        }
+
+        #receiveBtn {
+            margin-top: 20px;
+            display: block;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- PDF + DOCX libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.0.2/build/index.umd.min.js"></script>
+
+
+</head>
+
+<body>
+    <div id="flowerIntro">
+        <div id="flowerContainer"></div> <!-- flowers only -->
+        <div id="flowerMessage">
+            When I look at these flowers, they speak of your purity and kindness.
+            I'm reminded of God's creativity and beauty - how He crafts the most delicate things with His mighty hands.
+            Among all His creations, none compare to you. You are
+            breathtaking. (P.S. I know this isn't much at all, but one day I'll but all the flowers in the world for
+            you. Promise! ❤️ )
+        </div>
+        <button id="receiveBtn">Receive Flowers 💐</button>
+    </div>
+
+
+
+
+    <div class="page-header">
+        <div class="glow"></div>
+        <h2>💐 Sweet’s Flower Delivery — Est. 2025 💐</h2>
+    </div>
+
+    <div class="app" id="app">
+        <header id="header">
+            <h1>Sweet's Flower Delivery 💐</h1>
+            <div class="byline">Delivery by Joash aka Sweet 😏</div>
+        </header>
+        <main id="main" class="card center">
+            <div id="startScreen" style="opacity:0">
+                <p style="margin:8px 0;">Welcome to Sweet's Flower Delivery — a little feedback to make the moment last.
+                </p>
+                <button class="big-btn" id="startBtn">Start 💖</button>
+                <p class="small" style="margin-top:8px">Tap to begin. Our song will commence soon!</p>
+            </div>
+            <div id="questionArea" style="display:none;width:100%"></div>
+            <div id="finalArea" style="display:none;width:100%" class="final center">
+                <div style="font-size:18px;margin-bottom:8px">Thank you for making me the happiest guy alive 💞</div>
+                <div class="confetti">🎉 ❤️ ✨</div>
+                <div class="download-row">
+                    <button class="download-btn" id="downloadPdf">Download PDF</button>
+                </div>
+                <p class="small" style="margin-top:8px">You can also close this tab and enjoy the fair 🌙</p>
+            </div>
+        </main>
+        <audio id="bgMusic" loop>
+            <source id="bgSrc" src="Will Linley - Cinematic (Official Audio).mp3" type="audio/mpeg">
+        </audio>
+        <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.3.0/docx.umd.js"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const flowerIntro = document.getElementById("flowerIntro");
+                const flowerImages = [
+                    "Images/baby-breath-1.jpg",
+                    "Images/lily-of-the-valley-1.jpg",
+                    "Images/lily-of-the-valley-2.jpg",
+                    "Images/lily-of-the-valley-3.jpg",
+                    "Images/lily-of-the-valley-4.jpg",
+                    "Images/pink-and-white-baby-breath-3.jpeg",
+                    "Images/pink-baby-breath-2.jpeg",
+                    "Images/tulips-color-1.png",
+                    "Images/tulips-sunset-2.jpg",
+                    "Images/white-daisies-1.jpeg",
+                    "Images/white-daisies-2.jpeg",
+                    "Images/white-daisies-3.jpg",
+                    "Images/white-tulip-3.jpg",
+                    "Images/red-rose-1.jpeg",
+                    "Images/red-rose-2.jpeg"
+                ];
+
+                const rows = 3;
+                const cols = 5;
+                const cellWidth = flowerIntro.offsetWidth / cols;
+                const cellHeight = flowerIntro.offsetHeight / rows;
+
+                const shuffledFlowers = flowerImages.sort(() => Math.random() - 0.5);
+
+                shuffledFlowers.forEach((src, i) => {
+                    const img = document.createElement("img");
+                    img.src = src;
+                    img.classList.add("flower");
+
+                    const row = Math.floor(i / cols);
+                    const col = i % cols;
+
+                    // Random position inside cell without touching edges
+                    const offsetX = Math.random() * (cellWidth - 100);
+                    const offsetY = Math.random() * (cellHeight - 100);
+
+                    img.style.left = col * cellWidth + offsetX + "px";
+                    img.style.top = row * cellHeight + offsetY + "px";
+
+                    flowerIntro.appendChild(img);
+
+                    // Animate in
+                    setTimeout(() => {
+                        img.style.opacity = "1";
+                        img.style.transform = `scale(1) rotate(${Math.random() * 20 - 10}deg)`;
+                    }, 200 + i * 150);
+                });
+
+                document.getElementById("receiveBtn").addEventListener("click", () => {
+                    const flowerIntro = document.getElementById("flowerIntro");
+                    // Fade out the intro
+                    flowerIntro.classList.add("fade-out");
+                    // Remove the intro after fade
+                    setTimeout(() => flowerIntro.remove(), 2000);
+                });
+
+            });
+        </script>
+
+
+        <script>
+            const firebaseConfig = { apiKey: "REPLACE_ME", authDomain: "REPLACE_ME", databaseURL: "REPLACE_ME", projectId: "REPLACE_ME", storageBucket: "REPLACE_ME", messagingSenderId: "REPLACE_ME", appId: "REPLACE_ME" };
+            const musicURL = "music/your-song.mp3";
+            const HER_NAME = 'Jecoliah';
+
+            const questions = [
+                { id: 'q1', type: 'choice', text: 'Did your delivery guy arrive on time or fashionably late? 😎', options: ['On time', 'Fashionably late'] },
+                { id: 'q2', type: 'rating', text: 'How would you rate your flowers and the delivery service? 🌸' },
+                { id: 'q3', type: 'special', text: 'Not a question, but your delivery guy says you look beautiful tonight. How do you feel about this comment? 💜', options: ['Highly Agree', 'Disagree'] },
+                { id: 'q4', type: 'choice', text: 'Would you like to have the same delivery guy in the future?? 💭', options: ['OFC YES', 'Maybe', 'No'] },
+                { id: 'q5', type: 'choice', text: 'Do you think your delivery guy is cute? 😏', options: ['He is SO FINE 😩', 'Tad Bit Crusty', 'No'] },
+                { id: 'q6', type: 'choice', text: 'Which best describes this delivery?', options: ['Romantic', 'Unexpected', 'Cinematic', 'All of the above'] },
+                { id: 'q7', type: 'choice', text: 'Would you recommend Sweet’s Flower Delivery to someone special? 🌹', options: ['Absolutely', 'No, it\'s only for me'] },
+                { id: 'q8', type: 'choice', text: 'What was your favorite part of the fair? 🎠', options: ['Rides', 'Food', 'Spending the day with your manz'] },
+                { id: 'q9', type: 'rating', text: 'How would you rate your date at the fair today? 🎡' },
+                { id: 'q10', type: 'choice', text: 'Do you love your delivery guy? 💕', options: ['Of course 💞', 'Maybe just a little 😳'] },
+                { id: 'q11', type: 'final', text: 'One last question... Jecoliah Hannah Pillay, Will you be my girlfriend? 💞' }
+            ];
+
+            let answers = {}, current = 0;
+            const startBtn = document.getElementById('startBtn');
+            const startScreen = document.getElementById('startScreen');
+            const questionArea = document.getElementById('questionArea');
+            const finalArea = document.getElementById('finalArea');
+            const bgMusic = document.getElementById('bgMusic');
+            const header = document.getElementById('header');
+            if (musicURL) document.getElementById('bgSrc').src = musicURL;
+
+            function createSparkles() {
+                for (let i = 0; i < 30; i++) {
+                    const s = document.createElement('div');
+                    s.className = 'sparkle';
+                    s.style.left = Math.random() * 100 + '%';
+                    s.style.top = '80%';
+                    s.style.backgroundColor = ['#6A0DAD', '#D4AF37', '#9370DB'][Math.floor(Math.random() * 3)];
+                    document.body.appendChild(s);
+                    setTimeout(() => s.remove(), 2000 + Math.random() * 1000);
+                }
+            }
+
+            function fadeIn(el, delay = 500) { el.style.transition = `opacity ${delay}ms ease`; el.style.opacity = 1; }
+            function fadeOut(el, delay = 500) { el.style.transition = `opacity ${delay}ms ease`; el.style.opacity = 0; }
+
+            function startIntro() {
+                // Fade in the header, but do NOT fade it out automatically
+                fadeIn(header, 1500);
+
+                // Fade in the start screen after header
+                setTimeout(() => {
+                    createSparkles();
+                    startScreen.style.opacity = 1;
+                }, 1800); // adjust timing if needed
+            }
+
+            startBtn.addEventListener('click', () => {
+                if (bgMusic) bgMusic.play();
+
+                // Only fade out the start screen, keep header visible
+                startScreen.classList.add('fade-out');
+
+                setTimeout(() => {
+                    startScreen.style.display = 'none';
+                    questionArea.style.display = 'block';
+                    document.getElementById('main').classList.add('full-height');
+                    renderQuestion();
+                }, 1000);
+            });
+
+            function renderQuestion() {
+                if (current >= questions.length) {
+                    showFinal();
+                    return;
+                }
+
+                const q = questions[current];
+                questionArea.innerHTML = '';
+
+                // Create the question text
+                const div = document.createElement('div');
+                div.className = 'question center fade-in';
+                div.innerHTML = `<div>${q.text}</div>`;
+                questionArea.appendChild(div);
+
+                // Create the options container
+                const controls = document.createElement('div');
+                controls.className = 'controls';
+
+                if (q.type === 'choice' || q.type === 'special') {
+
+                    q.options.forEach(opt => {
+                        const b = document.createElement('div');
+                        b.className = 'option';
+                        b.textContent = opt;
+
+                        // --- SPECIAL QUESTION (Disagree runs away) ---
+                        if (q.type === 'special' && opt === 'Disagree') {
+                            // Style and timing
+                            b.style.transition = 'transform 1.2s ease, opacity 1.2s ease';
+                            b.style.cursor = 'pointer';
+
+                            // After 4 seconds, make it "run away"
+                            setTimeout(() => {
+                                b.style.transform = 'translateX(300px) rotate(20deg)';
+                                b.style.opacity = '0';
+                            }, 4000);
+
+                            // Optional playful click message
+                            b.onclick = () => {
+                                alert("You can’t disagree with that 😏");
+                            };
+
+                        } else {
+                            // Normal option behavior
+                            b.onclick = () => {
+                                answers[q.id] = opt;
+                                b.classList.add('selected');
+                                controls.querySelectorAll('.option').forEach(o => o.style.pointerEvents = 'none');
+                                setTimeout(() => {
+                                    current++;
+                                    renderQuestion();
+                                }, 300);
+                            };
+                        }
+
+                        controls.appendChild(b);
+                    });
+
+                    questionArea.appendChild(controls);
+
+                } else if (q.type === 'rating') {
+                    for (let i = 1; i <= 5; i++) {
+                        const b = document.createElement('div');
+                        b.className = 'option';
+                        b.textContent = i;
+                        b.onclick = () => {
+                            answers[q.id] = i;
+                            b.classList.add('selected');
+                            controls.querySelectorAll('.option').forEach(o => o.style.pointerEvents = 'none');
+                            setTimeout(() => { current++; renderQuestion(); }, 300);
+                        };
+                        controls.appendChild(b);
+                    }
+                    questionArea.appendChild(controls);
+
+                } else if (q.type === 'text') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.placeholder = 'Type here...';
+                    input.style.width = '80%';
+
+                    const btn = document.createElement('button');
+                    btn.className = 'big-btn';
+                    btn.textContent = 'Submit';
+                    btn.onclick = () => {
+                        answers[q.id] = input.value;
+                        current++;
+                        renderQuestion();
+                    };
+
+                    questionArea.appendChild(input);
+                    questionArea.appendChild(btn);
+
+                } else if (q.type === 'final') {
+                    const btn = document.createElement('button');
+                    btn.className = 'big-btn';
+                    btn.textContent = '💖 Answer 💖';
+                    btn.onclick = () => { answers[q.id] = 'Yes'; showFinal(); };
+                    questionArea.appendChild(btn);
+                }
+            }
+
+            function showFinal() {
+                questionArea.style.display = 'none';
+                finalArea.style.display = 'block';
+                createSparkles();
+                launchConfetti();
+            }
+
+            function launchConfetti() {
+                const duration = 3000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+                function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+                const interval = setInterval(function () {
+                    const timeLeft = animationEnd - Date.now();
+                    if (timeLeft <= 0) return clearInterval(interval);
+                    const particleCount = 50 * (timeLeft / duration);
+                    confetti(Object.assign({}, defaults, {
+                        particleCount,
+                        origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+                    }));
+                }, 250);
+            }
+
+            startIntro();
+        </script>
+
+        <!-- ✅ Load jsPDF properly -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+        <script>
+            document.getElementById('downloadPdf').addEventListener('click', () => {
+                const jsPDF = window.jspdf?.jsPDF;
+                if (!jsPDF) return alert("PDF library not loaded.");
+
+                const doc = new jsPDF();
+                const now = new Date().toLocaleString('en-GB', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+
+                const HER_NAME = 'Jecoliah';
+
+                // ---- Header ----
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(22);
+                doc.setTextColor(106, 13, 173);
+                doc.text("Sweet's Flower Delivery", 105, 20, { align: "center" });
+
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(12);
+                doc.setTextColor(64, 64, 64);
+                doc.text(`Delivery for: ${HER_NAME}`, 15, 35);
+                doc.text(`Date: ${now}`, 195, 35, { align: "right" });
+
+                doc.setDrawColor(218, 165, 32);
+                doc.setLineWidth(0.5);
+                doc.line(10, 40, 200, 40);
+
+                // ---- Question Map ----
+                const questionText = {
+                    q1: "Did your delivery guy arrive on time or fashionably late?",
+                    q2: "How would you rate your flowers and the delivery service?",
+                    q3: "Your delivery guy says you look beautiful tonight. How do you feel about this comment?",
+                    q4: "Would you like to have the same delivery guy in the future?",
+                    q5: "Do you think your delivery guy is cute?",
+                    q6: "Which best describes this delivery?",
+                    q7: "Would you recommend Sweet’s Flower Delivery to someone special?",
+                    q8: "What was your favorite part of the fair?",
+                    q9: "How would you rate your date at the fair today?",
+                    q10: "Do you love your delivery guy?",
+                    q11: "One last question... Will you be my girlfriend?"
+                };
+
+                // ---- Body ----
+                let y = 55;
+                for (const [qid, ans] of Object.entries(answers)) {
+                    if (y > 270) { doc.addPage(); y = 20; }
+
+                    doc.setFont("helvetica", "bold");
+                    doc.setFontSize(12);
+                    doc.setTextColor(106, 13, 173);
+                    doc.text(questionText[qid] || qid, 15, y, { maxWidth: 180 });
+                    y += 7;
+
+                    doc.setFont("helvetica", "normal");
+                    doc.setFontSize(11);
+                    doc.setTextColor(60, 60, 60);
+                    doc.text(`Answer: ${ans}`, 20, y, { maxWidth: 180 });
+                    y += 12;
+                }
+
+                // ---- Footer ----
+                y += 8;
+                doc.setFont("helvetica", "italic");
+                doc.setFontSize(13);
+                doc.setTextColor(106, 13, 173);
+                doc.text("Thank you for being my everything", 105, y, { align: "center" });
+
+                // ---- Save ----
+                doc.save("SweetFlowerFeedback.pdf");
+            });
+        </script>
+
+
+    </div>
+</body>
+
+</html>
+
+
+
+
+<!-- <!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sweet's Flower Delivery 💐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f12;
+            --card: #16161a;
+            --rose: #E63946;
+            --pink: #FFB6C1;
+            --gold: #FFD700;
+            --muted: #bdbbbb;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Poppins, system-ui, Segoe UI, Roboto, -apple-system, Arial;
+            overflow-x: hidden
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 10%, #121217 0%, var(--bg) 40%), linear-gradient(180deg, #0b0b0d 0%, #0f0f12 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem
+        }
+
+        .app {
+            width: 100%;
+            max-width: 450px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden
+        }
+
+        header {
+            text-align: center;
+            padding: 8px;
+            opacity: 0;
+            transition: opacity 1.5s ease
+        }
+
+        h1 {
+            margin: .1rem 0;
+            font-size: 22px;
+            letter-spacing: 0.4px
+        }
+
+        .byline {
+            color: var(--gold);
+            font-size: 14px;
+            margin-top: 4px
+        }
+
+        .card {
+            background: var(--card);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 12px
+        }
+
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center
+        }
+
+        .big-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--rose), var(--pink));
+            padding: 12px 20px;
+            border-radius: 999px;
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 6px 18px rgba(230, 57, 70, 0.2)
+        }
+
+        .question {
+            font-size: 16px;
+            margin-bottom: 10px
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            display: none
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            cursor: pointer
+        }
+
+        .option.selected {
+            border-color: rgba(230, 57, 70, 0.85);
+            box-shadow: 0 6px 18px rgba(230, 57, 70, 0.06);
+            background: linear-gradient(180deg, rgba(230, 57, 70, 0.05), rgba(255, 182, 193, 0.02))
+        }
+
+        .rating {
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
+
+        .star {
+            font-size: 26px;
+            opacity: 0.35;
+            cursor: pointer
+        }
+
+        .star.on {
+            opacity: 1;
+            color: var(--gold)
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px
+        }
+
+        .ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: var(--muted);
+            cursor: pointer
+        }
+
+        .final {
+            padding: 20px
+        }
+
+        .confetti {
+            height: 80px
+        }
+
+        .download-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px
+        }
+
+        .download-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--rose);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: twinkle 2s linear infinite
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.5)
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-15px) scale(1)
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.5)
+            }
+        }
+
+        @media (max-width:450px) {
+            .app {
+                padding: 14px
+            }
+        }
+
+        .page-header {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            font-size: 16px;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(255, 182, 193, 0.4);
+            font-weight: 600;
+        }
+
+        .glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rose), var(--pink), var(--gold));
+            background-size: 300% 100%;
+            animation: glowMove 6s linear infinite;
+            filter: blur(2px);
+        }
+
+        @keyframes glowMove {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 300% 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-header">
+        <div class="glow"></div>
+        <h2>💐 Sweet’s Flower Delivery — Est. 2025 💐</h2>
+    </div>
+
+    <div class="app" id="app">
+        <header id="header">
+            <h1>Sweet's Flower Delivery 💐</h1>
+            <div class="byline">Delivery by Joash aka Sweet 😏</div>
+        </header>
+        <main id="main" class="card center">
+            <div id="startScreen" style="opacity:0">
+                <p style="margin:8px 0;">Welcome to Sweet's Flower Delivery — a little feedback to make the moment last.
+                </p>
+                <button class="big-btn" id="startBtn">Start 💖</button>
+                <p class="small" style="margin-top:8px">Tap to begin. Our song will commence soon!</p>
+            </div>
+            <div id="questionArea" style="display:none;width:100%"></div>
+            <div id="finalArea" style="display:none;width:100%" class="final center">
+                <div style="font-size:18px;margin-bottom:8px">Thank you for making me the happiest guy alive 💞</div>
+                <div class="confetti">🎉 ❤️ ✨</div>
+                <div class="download-row">
+                    <button class="download-btn" id="downloadDocx">Download Word Document</button>
+                    <button class="download-btn" id="downloadPdf">Download PDF</button>
+                </div>
+                <p class="small" style="margin-top:8px">You can also close this tab and enjoy the fair 🌙</p>
+            </div>
+        </main>
+        <audio id="bgMusic" loop>
+            <source id="bgSrc" src="Will Linley - Cinematic (Official Audio).mp3" type="audio/mpeg">
+        </audio>
+        <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.3.0/docx.umd.js"></script>
+        <script>
+            const firebaseConfig = { apiKey: "REPLACE_ME", authDomain: "REPLACE_ME", databaseURL: "REPLACE_ME", projectId: "REPLACE_ME", storageBucket: "REPLACE_ME", messagingSenderId: "REPLACE_ME", appId: "REPLACE_ME" };
+            const musicURL = "music/your-song.mp3";
+            const HER_NAME = 'Jecoliah';
+
+            // firebase.initializeApp(firebaseConfig);
+            // const database = firebase.database();
+
+            const questions = [
+                { id: 'q1', type: 'rating', text: 'How would you rate your flowers and the delivery service? 🌸' },
+                { id: 'q2', type: 'choice', text: 'Did your delivery guy arrive on time or fashionably late? 😎', options: ['On time', 'Fashionably late'] },
+                { id: 'q3', type: 'choice', text: 'Do you think your delivery guy is cute? 😏', options: ['Yes', 'Maybe', 'No'] },
+                { id: 'q4', type: 'scale', text: 'On a scale of 1–Sweet, how sweet was your delivery guy? 🍬', scale: 10 },
+                { id: 'q5', type: 'choice', text: 'Would you order from Sweet\'s Flower Delivery again? 😉', options: ['Ofc YES', 'Maybe', 'No'] },
+                { id: 'q6', type: 'choice', text: 'Which best describes this delivery?', options: ['Romantic', 'Unexpected', 'Cinematic'] },
+                { id: 'q7', type: 'text', text: 'Would you like to have the same delivery guy, the next time you get flowers?? 💭', options: ['Ofc YES', 'Maybe someone else', 'Never again'] },
+                { id: 'q8', type: 'rating', text: 'How would you rate your day at the fair today? 🎡' },
+                { id: 'q9', type: 'choice', text: 'What was your favorite part of the fair? 🎠', options: ['Rides', 'Food', 'Company', 'Everything'] },
+                { id: 'q10', type: 'final', text: 'One last question... Will you be my girlfriend? 💞' }
+            ];
+
+            let answers = {}, current = 0;
+            const startBtn = document.getElementById('startBtn');
+            const startScreen = document.getElementById('startScreen');
+            const questionArea = document.getElementById('questionArea');
+            const finalArea = document.getElementById('finalArea');
+            const bgMusic = document.getElementById('bgMusic');
+            const header = document.getElementById('header');
+            if (musicURL) document.getElementById('bgSrc').src = musicURL;
+
+            function createSparkles() {
+                for (let i = 0; i < 30; i++) {
+                    const s = document.createElement('div');
+                    s.className = 'sparkle';
+                    s.style.left = Math.random() * 100 + '%';
+                    s.style.top = '80%';
+                    s.style.backgroundColor = ['#E63946', '#FFB6C1', '#FFD700'][Math.floor(Math.random() * 3)];
+                    document.body.appendChild(s);
+                    setTimeout(() => s.remove(), 2000 + Math.random() * 1000);
+                }
+            }
+
+            function fadeIn(el, delay = 500) { el.style.transition = `opacity ${delay}ms ease`; el.style.opacity = 1; }
+            function fadeOut(el, delay = 500) { el.style.transition = `opacity ${delay}ms ease`; el.style.opacity = 0; }
+
+            function startIntro() {
+                fadeIn(header, 1500);
+                setTimeout(() => {
+                    createSparkles();
+                    fadeOut(header, 1000);
+                    setTimeout(() => {
+                        startScreen.style.opacity = 1;
+                    }, 1000);
+                }, 2500);
+            }
+
+            startBtn.addEventListener('click', () => {
+                if (bgMusic) bgMusic.play();
+                startScreen.style.display = 'none';
+                questionArea.style.display = 'block';
+                renderQuestion();
+            });
+
+            function renderQuestion() {
+                if (current >= questions.length) { showFinal(); return; }
+                const q = questions[current];
+                questionArea.innerHTML = '';
+                const div = document.createElement('div');
+                div.className = 'question center';
+                div.innerHTML = `<div>${q.text}</div>`;
+                questionArea.appendChild(div);
+                if (q.type === 'choice') {
+                    const controls = document.createElement('div'); controls.className = 'controls';
+                    q.options.forEach(opt => {
+                        const b = document.createElement('div'); b.className = 'option'; b.textContent = opt;
+                        b.onclick = () => { answers[q.id] = opt; current++; renderQuestion(); };
+                        controls.appendChild(b);
+                    });
+                    questionArea.appendChild(controls);
+                } else if (q.type === 'rating' || q.type === 'scale') {
+                    const controls = document.createElement('div'); controls.className = 'controls';
+                    for (let i = 1; i <= 5; i++) {
+                        const b = document.createElement('div'); b.className = 'option'; b.textContent = i;
+                        b.onclick = () => { answers[q.id] = i; current++; renderQuestion(); };
+                        controls.appendChild(b);
+                    }
+                    questionArea.appendChild(controls);
+                } else if (q.type === 'text') {
+                    const input = document.createElement('input'); input.type = 'text'; input.placeholder = 'Type here...'; input.style.width = '80%';
+                    const btn = document.createElement('button'); btn.className = 'big-btn'; btn.textContent = 'Submit';
+                    btn.onclick = () => { answers[q.id] = input.value; current++; renderQuestion(); };
+                    questionArea.appendChild(input); questionArea.appendChild(btn);
+                } else if (q.type === 'final') {
+                    const btn = document.createElement('button'); btn.className = 'big-btn'; btn.textContent = '💖 Answer 💖';
+                    btn.onclick = () => { answers[q.id] = 'Yes'; showFinal(); };
+                    questionArea.appendChild(btn);
+                }
+            }
+
+            function showFinal() {
+                questionArea.style.display = 'none';
+                finalArea.style.display = 'block';
+                createSparkles();
+                // Save to Firebase
+                database.ref('responses/' + Date.now()).set(answers);
+            }
+
+            startIntro();
+        </script>
+    </div>
+</body>
+
+</html> -->
